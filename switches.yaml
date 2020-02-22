@@ -1,0 +1,19 @@
+####################################################
+#                         switches.yaml            #
+####################################################
+# Relay_1 is a stable unit that uses an on board uC
+# to prevent power on toggling
+
+# Used to turn on a 12V alarm siren
+  - platform: mqtt
+    name: "single_relay_1"
+    state_topic: "ha/Relay_1/stat"
+    command_topic: "ha/Relay_1/action"
+    qos: 0
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "online"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: true
+    retain: true

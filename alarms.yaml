@@ -1,0 +1,46 @@
+        
+####################################################
+#                 alarms.yaml                      #
+####################################################
+####################################################
+#                     Alarm Siren                  #
+####################################################
+# Controlled by switch.single_relay_1
+  - id: sound_alarm_on
+    trigger:
+      - platform: state
+        entity_id: input_boolean.alarm_state
+        from: 'off'
+        to: 'on' 
+    action:
+      - service: script.allalexastalk
+        data: 
+            message: "Automation system alarm.  Automation system alarm."   
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.single_relay_1
+  - id: sound_alarm_timed_off
+    trigger:
+      - platform: state
+        entity_id: input_boolean.alarm_state
+        to: 'on'
+        for:
+          minutes: 5
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.alarm_state
+
+  - id: sound_alarm_off
+    trigger:
+      - platform: state
+        entity_id: input_boolean.alarm_state
+        from: 'on'
+        to: 'off' 
+    action:
+      - service: script.allalexastalk
+        data: 
+            message: "Automation system alarm cancelled."   
+      - service: homeassistant.turn_off
+        data:
+          entity_id: switch.single_relay_1
